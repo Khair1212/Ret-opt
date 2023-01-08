@@ -1,0 +1,24 @@
+Prod Cat Code,Prod Cat,Prod Subcat Code,Prod Subcat,Product Info,Product Code
+1,Clothing,4,Mens,Clothing_Mens,1_4
+1,Clothing,1,Women,Clothing_Women,1_1
+1,Clothing,3,Kids,Clothing_Kids,1_3
+2,Footwear,1,Mens,Footwear_Mens,2_1
+2,Footwear,3,Women,Footwear_Women,2_3
+2,Footwear,4,Kids,Footwear_Kids,2_4
+3,Electronics,4,Mobiles,Electronics_Mobiles,3_4
+3,Electronics,5,Computers,Electronics_Computers,3_5
+3,Electronics,8,Personal Appliances,Electronics_Personal Appliances,3_8
+3,Electronics,9,Cameras,Electronics_Cameras,3_9
+3,Electronics,10,Audio and video,Electronics_Audio and video,3_10
+4,Bags,1,Mens,Bags_Mens,4_1
+4,Bags,4,Women,Bags_Women,4_4
+5,Books,7,Fiction,Books_Fiction,5_7
+5,Books,12,Academic,Books_Academic,5_12
+5,Books,10,Non-Fiction,Books_Non-Fiction,5_10
+5,Books,11,Children,Books_Children,5_11
+5,Books,3,Comics,Books_Comics,5_3
+5,Books,6,DIY,Books_DIY,5_6
+6,Home and kitchen,2,Furnishing,Home and kitchen_Furnishing,6_2
+6,Home and kitchen,10,Kitchen,Home and kitchen_Kitchen,6_10
+6,Home and kitchen,11,Bath,Home and kitchen_Bath,6_11
+6,Home and kitchen,12,Tools,Home and kitchen_Tools,6_12
