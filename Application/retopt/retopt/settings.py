@@ -166,13 +166,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'store/static/media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'store'
+LOGIN_REDIRECT_URL = 'home'
 
 LOGIN_URL = 'login'
 
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTH_USER_MODEL = 'account.User'
+AUTH_USER_MODEL = 'account.User' 
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_TEMPLATE_PACK = 'bootstrap4' 

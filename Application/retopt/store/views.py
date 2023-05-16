@@ -1,6 +1,8 @@
 import datetime
 from django.shortcuts import render
-from .models import *
+
+from account.models import Analyst
+from .models import * 
 from django.http import JsonResponse
 import json 
 
@@ -10,7 +12,10 @@ from django.http import HttpResponseRedirect
 from .models import Product
 from .forms import ProductForm
 from django.contrib.auth.decorators import user_passes_test
-
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
+from django.views.decorators.csrf import csrf_exempt
 # def create_product(request):
 #     if request.method == 'POST':
 #         form = ProductForm(request.POST, request.FILES)
@@ -22,15 +27,30 @@ from django.contrib.auth.decorators import user_passes_test
 #     return render(request, 'store/Store.html', {'form': form})
 
 
-#@user_passes_test(lambda u: u.groups.filter(name='customer').exists())
+
+
+@login_required
+def home(request):
+    user = request.user
+    print('User:', user)
+    if user.is_authenticated:
+        
+        if user.is_customer==True:
+            return redirect('store')
+        elif user.is_analyst==True:
+            return redirect('segmentation:clustering')
+    else:
+        return redirect('login')
+    
+
+@user_passes_test(lambda u: u.is_authenticated and not u.is_analyst)
 def store(request):
     if request.user.is_authenticated :
-        print(request.user)
         customer = Customer.objects.get(user=request.user)
-        print("Customer:",customer)
+        # print("Customer:",customer)
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
-        print("Items:", items)
+        # print("Items:", items)
         cartItems = order.get_cart_items
         
     else:
@@ -39,11 +59,13 @@ def store(request):
         cartItems = order['get_cart_items']
 
     products = Product.objects.all()
-    print(Product.objects.latest('-id').image.url)
+    # print(Product.objects.latest('-id').image.url)
     context = {'products': products, 'cartItems': cartItems} 
     #context = {'products':products}   
     return render(request, 'store/Store.html', context)  
 
+
+@user_passes_test(lambda u: u.is_authenticated and not u.is_analyst)
 def cart(request):
 
     if request.user.is_authenticated :
@@ -61,6 +83,8 @@ def cart(request):
     context = {'items':items, 'order':order, 'cartItems': cartItems}
     return render(request, 'store/Cart.html', context) 
 
+
+@user_passes_test(lambda u: u.is_authenticated and not u.is_analyst)
 def checkout(request):
     if request.user.is_authenticated :
         customer = request.user.customer
@@ -75,6 +99,8 @@ def checkout(request):
     context = {'items':items, 'order':order, 'cartItems': cartItems}
     return render(request, 'store/Checkout.html', context) 
 
+
+@user_passes_test(lambda u: u.is_authenticated and not u.is_analyst)
 def updateItem(request):
     data = json.loads(request.body)
     productID = data['productID']
@@ -99,6 +125,10 @@ def updateItem(request):
 
     return JsonResponse("Item is added", safe=False)
 
+
+#@user_passes_test(lambda u: u.groups.filter(name='customer').exists())
+@csrf_exempt
+@user_passes_test(lambda u: u.is_authenticated and not u.is_analyst)
 def processOrder(request):
     transaction_id = datetime.datetime.now().timestamp()
     data = json.loads(request.body)

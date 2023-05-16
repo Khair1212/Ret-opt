@@ -1,5 +1,7 @@
 from django.urls import path, include
 from . import views
+
+app_name = 'segmentation'
 urlpatterns = [
-    path('', views.home, name="home"),
+    path('', views.segmentation_view, name="clustering"),
 ]

@@ -22,7 +22,7 @@ from django.contrib import admin
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('Segmentation/', include('segmentation.urls')),
+    path('segmentation/', include('segmentation.urls')),
     path('',include('store.urls')),
     path('', include('account.urls')),
 ]
