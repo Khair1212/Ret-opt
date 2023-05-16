@@ -3,10 +3,9 @@
 {% block content %}
 
     <div class="row">
-        {% for product in materials %}
+        {% for product in products %}
             <div class="col-lg-4">
-                <img alt="" class="thumbnail" src= "{{ product.image.url }}">
-                <p>Hello </p>
+                <img alt="" class="thumbnail" src= "{{product.image.url}}">
                 <div class="box-element product">
                     <h6><strong>{{product.name}}</strong></h6>
                     <hr>

@@ -1,7 +1,6 @@
 from django.db import models
 from django.conf import settings
-from django.contrib.auth.models import User
-
+from account.models import Customer
 # Create your models here.
 class Product(models.Model): 
     name = models.CharField(max_length=200)
@@ -24,7 +23,7 @@ class Product(models.Model):
         return url 
 
 class Order(models.Model):
-    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True) 
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True) 
     date_ordered = models.DateTimeField(auto_now_add=True) 
     complete = models.BooleanField(default=False)   
     transaction_id = models.CharField(max_length=100, null=True) 
@@ -34,7 +33,6 @@ class Order(models.Model):
         shipping = False
         order_items = self.orderitem_set.all()
         for i in order_items:
-            if i.product.digital==False:
                 shipping = True
         return shipping 
 
@@ -65,7 +63,7 @@ class OrderItem(models.Model):
         return total  
 
 class ShippingAdress(models.Model):
-    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null = True)
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null = True)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null = True)
     address = models.CharField(max_length = 200, null = False)
     city = models.CharField(max_length=200, null=False)
@@ -75,3 +73,19 @@ class ShippingAdress(models.Model):
 
     def __str__(self) -> str:
         return self.address
+    
+
+
+# class Transaction(models.Model):
+#     transaction_id = models.CharField(max_length=100, null=True, primary_key=True)
+#     cust_id = models.ForeignKey(Customer,on_delete=models.SET_NULL, null=True)
+#     tran_date = models.DateTimeField(auto_now_add=True)
+#     prod_cat_code = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name='product_cat_code')
+#     prod_subcat_code = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name='product_subcat_code')
+#     qty = models.IntegerField()
+#     rate = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name='price')
+#     total_amt = models.FloatField()
+
+#     def save(self, *args, **kwargs):
+#         self.total_amt = self.qty * self.rate.price
+#         super(Transaction, self).save(*args, **kwargs)

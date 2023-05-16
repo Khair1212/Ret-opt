@@ -40,10 +40,12 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'rest_framework',
     'segmentation.apps.SegmentationConfig',
-    'users.apps.UsersConfig',
     'store.apps.StoreConfig',
     'rest_framework_simplejwt',
     'drf_yasg',
+    'account.apps.AccountConfig',
+    'crispy_forms',
+    'crispy_bootstrap4',
     
  ]
 
@@ -161,6 +163,16 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'store/static/media')
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = 'store'
+
+LOGIN_URL = 'login'
+
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'account.User'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
