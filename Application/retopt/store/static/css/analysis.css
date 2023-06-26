@@ -1,0 +1,55 @@
+#content {
+    position: relative;
+    width: 100%;
+    height: 1400px; /* Adjust the height as needed */
+} 
+
+
+/* CSS for the pages (iframes) */
+.page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+/* CSS to show active page (iframe) */
+.active {
+    display: block;
+}
+
+/* CSS for the buttons container */
+.switch-button {
+    position: fixed;
+    top: 100px; /* Adjust the top position as needed */
+    right: 0;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 0;
+}
+
+/* CSS for the buttons */
+.switch-button button {
+    display: block;
+    width: 160px;
+    height: 40px;
+    margin-bottom: 10px;
+    background-color: #4f868c; /* Updated button color */
+    border: none;
+    border-radius: 10px 0 0 10px; /* Removed border radius on the right side */
+    color: #fff; /* Updated button text color */
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* CSS for the active button */
+/* CSS for the active button */
+.switch-button button.active {
+    color: yellow;
+    background-color: yellow;
+    border-color: yellow; /* Added border-color property */
+}

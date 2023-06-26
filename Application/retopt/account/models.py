@@ -11,29 +11,29 @@ class User(AbstractUser):
 
 class Analyst(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,blank=True, null=True)
-    name = models.CharField(max_length=100)
-    email = models.EmailField()
-    DOB = models.DateField()
+    name = models.CharField(max_length=100, null=True)
+    email = models.EmailField(null=True)
+    DOB = models.DateField(null=True, blank=True)
     gender_choices = (
             ('M', 'Male'),
             ('F', 'Female')
         )
     
-    gender = models.CharField(max_length=1, choices=gender_choices)
-    city_code = models.CharField(max_length=2)  
+    gender = models.CharField(max_length=1, choices=gender_choices, null=True, blank=True)
+    city_code = models.CharField(max_length=2, null = True, blank = True)  
 
 class Customer(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,blank=True, null=True)
     name = models.CharField(max_length=100)
     email = models.EmailField()
-    DOB = models.DateField()
+    DOB = models.DateField(null=True, blank=True)
     gender_choices = (
             ('M', 'Male'),
             ('F', 'Female')
         )
     
-    gender = models.CharField(max_length=1, choices=gender_choices)
-    city_code = models.CharField(max_length=2)
+    gender = models.CharField(max_length=1, choices=gender_choices,null=True, blank=True)
+    city_code = models.CharField(max_length=2,null=True, blank=True)
 
 
 class Profile(models.Model):

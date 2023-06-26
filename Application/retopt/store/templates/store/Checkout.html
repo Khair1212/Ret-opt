@@ -67,7 +67,77 @@
         </div>
     </div>
 
+
 <script type="text/javascript">
+    var shipping = '{{order.shipping}}';
+    var total = '{{order.get_cart_total}}';
+
+    if (shipping == 'False') {
+        document.getElementById('shipping-info').innerHTML = '';
+    }
+
+    if (user != 'AnnonymousUser') {
+        document.getElementById('user-info').innerHTML = '';
+    }
+
+    document.getElementById('form-button').addEventListener('click', function (e) {
+        submitFormData();
+    });
+
+    function submitFormData() {
+        console.log('Product has been purchased!');
+        var form = document.getElementById('form'); // Get the form element
+
+        var userFormData = {
+            'name': null,
+            'email': null,
+            'total': total
+        };
+
+        var shippingInfo = {
+            'address': null,
+            'city': null,
+            'state': null,
+            'zipcode': null,
+        };
+
+        if (shipping != false) {
+            shippingInfo.address = form.elements['address'].value; // Update field name references
+            shippingInfo.city = form.elements['city'].value;
+            shippingInfo.state = form.elements['state'].value;
+            shippingInfo.zipcode = form.elements['zipcode'].value;
+        }
+
+        if (user == 'AnonymousUser') {
+            userFormData.name = form.elements['name'].value; // Update field name references
+            userFormData.email = form.elements['email'].value;
+        }
+        
+        console.log('Shipping Info:', shippingInfo)
+	   	console.log('User Info:', userFormData)
+
+        var url = '/process_order/';
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify({ 'form': userFormData, 'shipping': shippingInfo })
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Success', data);
+                alert('Transaction Completed');
+                window.location.href = "{% url 'store' %}";
+            });
+    }
+</script>
+<!-- ... -->
+
+
+
+<!-- {% comment %} <script type="text/javascript">
     var shipping = '{{order.shipping}}'
     var total = '{{order.get_cart_total}}'
     if (shipping == 'False'){
@@ -81,49 +151,51 @@
         submitFormData()
     })
 
-    function submitFormData(){
-        console.log('Product has been purchased!')
+    function submitFormData() {
+        console.log('Product has been purchased!');
+        var form = document.getElementById('form'); // Get the form element
+    
         var userFormData = {
-            'name':null,
-            'email':null,
-            'total':total
-        } 
-
+            'name': null,
+            'email': null,
+            'total': total
+        };
+    
         var shippingInfo = {
-            'address':null,
+            'address': null,
             'city': null,
-            'state':null,
-            'zipcode':null,
+            'state': null,
+            'zipcode': null,
+        };
+    
+        if (shipping != false) {
+            shippingInfo.address = form.elements['address'].value; // Update field name references
+            shippingInfo.city = form.elements['city'].value;
+            shippingInfo.state = form.elements['state'].value;
+            shippingInfo.zipcode = form.elements['zipcode'].value;
         }
-
-        if (shipping != false){
-            shippingInfo.address = form.address.value
-            shippingInfo.city = form.city.value
-            shippingInfo.state = form.state.value
-            shippingInfo.zipcode = form.zipcode.value
+        if (user == 'AnonymousUser') {
+            userFormData.name = form.elements['name'].value; // Update field name references
+            userFormData.email = form.elements['email'].value;
         }
-        if (user == 'AnonymousUser'){
-            userFormData.name = form.name.value
-            userFormData.email = form.email.value
-        }
-
-        var url = '/process_order/'
-        fetch (url,{
+    
+        var url = '/process_order/';
+        fetch(url, {
             method: 'POST',
-            headers:{
-                'Content-Type':'application/json',
-                'X-CSRFToken': csrftoken, 
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
             },
-            body:JSON.stringify({'form': userFormData, 'shipping':shippingInfo})
+            body: JSON.stringify({ 'form': userFormData, 'shipping': shippingInfo })      
         })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log('Success', data);
-            alert('Transaction Completed');
-            window.location.href = "{% url 'store' %}"
-        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Success', data);
+                alert('Transaction Completed');
+                window.location.href = "{% url 'store' %}";
+            });
     }
-</script>
+</script> {% endcomment %} -->
 
 
 <!-- <div id="success-message" style="display:none;">Product purchased successfully!</div> -->

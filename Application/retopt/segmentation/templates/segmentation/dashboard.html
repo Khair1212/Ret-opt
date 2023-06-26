@@ -1,0 +1,56 @@
+{% extends 'store/Main.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+    
+<div id="content">
+    <div class="page active" id="customer-analysis">
+        <!-- Customer Analysis iframe goes here -->
+        <iframe width="100%" height="1400" src="https://lookerstudio.google.com/embed/reporting/eda813be-ad7e-4d1b-9420-08921d0a712a/page/4vjFC" frameborder="0" style="border:0" allowfullscreen></iframe>
+    </div>
+
+    <div class="page" id="product-analysis">
+        <!-- Product Analysis iframe goes here -->
+        <iframe width="100%" height="1400" src="https://lookerstudio.google.com/embed/reporting/eda813be-ad7e-4d1b-9420-08921d0a712a/page/VpyFC" frameborder="0" style="border:0" allowfullscreen></iframe>
+    </div>
+
+    <div class="page" id="sales-performance">
+        <!-- Sales Performance iframe goes here -->
+        <iframe width="100%" height="1400" src="https://lookerstudio.google.com/embed/reporting/eda813be-ad7e-4d1b-9420-08921d0a712a/page/UYkFC" frameborder="0" style="border:0" allowfullscreen></iframe>
+    </div>
+</div>
+
+<div class="switch-button">
+    <button onclick="showPage('customer-analysis')">Customer Analysis</button>
+    <button onclick="showPage('product-analysis')">Product Analysis</button>
+    <button onclick="showPage('sales-performance')">Sales Performance</button>
+</div>
+          
+
+<script>
+    // JavaScript to handle iframe switching and button styling
+    function showPage(pageId, button) {
+        // Hide all pages
+        var pages = document.getElementsByClassName('page');
+        for (var i = 0; i < pages.length; i++) {
+            pages[i].classList.remove('active');
+        }
+
+        // Show the selected page
+        var page = document.getElementById(pageId);
+        if (page) {
+            page.classList.add('active');
+        }
+
+        // Set the active button
+        var buttons = document.getElementsByTagName('button');
+        for (var j = 0; j < buttons.length; j++) {
+            buttons[j].classList.remove('active');
+        }
+        button.classList.add('active');
+    }
+</script>
+        
+    
+
+{% endblock content %}
